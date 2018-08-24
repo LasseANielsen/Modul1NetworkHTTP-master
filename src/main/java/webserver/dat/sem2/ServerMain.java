@@ -257,11 +257,13 @@ public class ServerMain {
         {
             case "add":
                 res = res.replace( "$2", String.valueOf( first+second ) );
+                res = res.replace("$tegn", "+");
             break;
             case "multiply":
                 int a = Integer.valueOf(first);
                 int b = Integer.valueOf(second);
                 res = res.replace( "$2", String.valueOf(a*b));
+                res = res.replace("$tegn", "*");
             break;
             default:
                 res = "";
