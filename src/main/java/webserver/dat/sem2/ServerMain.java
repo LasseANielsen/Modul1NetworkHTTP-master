@@ -224,17 +224,23 @@ public class ServerMain {
     private static String addOurNumbers( HttpRequest req ) {
         String first = req.getParameter( "firstnumber" );
         String second = req.getParameter( "secondnumber" );
-        int fi = Integer.parseInt( first );
-        int si = Integer.parseInt( second );
+        String fi = String.valueOf(Integer.parseInt(first));
+        String si = String.valueOf(Integer.parseInt(second));
+        String filename = "results.tmpl";
+        return generateHTML(filename, fi, si, " ");
+    }
+    
+    private static String generateHTML(String file, String first, String second, String c)
+    {
         String res = null;
         try {
-            res = getResourceFileContents("pages/results.tmpl");
+            res = getResourceFileContents("pages/" + file);
         } catch (Exception ex) {
             System.out.println("error");
         }
-        res = res.replace( "$0", first);
+        res = res.replace("$0", first);
         res = res.replace( "$1", second);
-        res = res.replace( "$2", String.valueOf( fi+si ) );
+        res = res.replace( "$2", String.valueOf( first+second ) );
         return res;
     }
 
