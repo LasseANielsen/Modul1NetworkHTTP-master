@@ -188,6 +188,9 @@ public class ServerMain {
                         case "/localhost:8080/addournumbers":
                             res = addOurNumbers(req);
                             break;
+                        case "/multiply":
+                            res = multiplyOurNumbers(req);
+                            break;
                         default:
                             res = "Unknown path: " + path;
                     }
@@ -227,7 +230,16 @@ public class ServerMain {
         String fi = String.valueOf(Integer.parseInt(first));
         String si = String.valueOf(Integer.parseInt(second));
         String filename = "results.tmpl";
-        return generateHTML(filename, fi, si, " ");
+        return generateHTML(filename, fi, si, "add");
+    }
+    
+    private static String multiplyOurNumbers( HttpRequest req ) {
+        String first = req.getParameter( "firstnumber" );
+        String second = req.getParameter( "secondnumber" );
+        String fi = String.valueOf(Integer.parseInt(first));
+        String si = String.valueOf(Integer.parseInt(second));
+        String filename = "results.tmpl";
+        return generateHTML(filename, fi, si, "multiply");
     }
     
     private static String generateHTML(String file, String first, String second, String c)
@@ -240,7 +252,20 @@ public class ServerMain {
         }
         res = res.replace("$0", first);
         res = res.replace( "$1", second);
-        res = res.replace( "$2", String.valueOf( first+second ) );
+        
+        switch(c)
+        {
+            case "add":
+                res = res.replace( "$2", String.valueOf( first+second ) );
+            break;
+            case "multiply":
+                int a = Integer.valueOf(first);
+                int b = Integer.valueOf(second);
+                res = res.replace( "$2", String.valueOf(a*b));
+            break;
+            default:
+                res = "";
+        }
         return res;
     }
 
